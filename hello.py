@@ -1,5 +1,5 @@
 def app(environ, start_response):
-    body = [(i + '\n', 'utf-8') for i in environ['QUERY_STRING'].split('&')]
+    body = [bytes(i + '\n', 'ascii') for i in environ['QUERY_STRING'].split('&')]
     print(body)
     status = '200 OK'
     response_headers = [
@@ -7,4 +7,4 @@ def app(environ, start_response):
         ('Content-Length', str(len(body)))
     ]
     start_response(status, response_headers)
-    return ("".join(body))
+    return body
